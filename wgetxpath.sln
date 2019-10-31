@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wgetxpath", "wgetxpath\wgetxpath.csproj", "{B7AD978E-3D67-4B6F-905E-F8DA827D83CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B7AD978E-3D67-4B6F-905E-F8DA827D83CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7AD978E-3D67-4B6F-905E-F8DA827D83CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7AD978E-3D67-4B6F-905E-F8DA827D83CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7AD978E-3D67-4B6F-905E-F8DA827D83CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C7AF1B4-B6CB-4E36-BE40-B3A4BB47E53D}
+	EndGlobalSection
+EndGlobal

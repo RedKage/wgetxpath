@@ -11,5 +11,5 @@ Code is in .NET Core 3.0, works fine on a Linux box with Mono 6.4.0.198.
 ---
 
 ## License ##
-|![http://i.imgur.com/oGGeSQP.png](http://i.imgur.com/oGGeSQP.png)|The license for offline_dictionary.com" is the [WTFPL](http://www.wtfpl.net/): _Do What the Fuck You Want to Public License_.|
+|![http://i.imgur.com/oGGeSQP.png](http://i.imgur.com/oGGeSQP.png)|The license for wgetxpath is the [WTFPL](http://www.wtfpl.net/): _Do What the Fuck You Want to Public License_.|
 |:----------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------|

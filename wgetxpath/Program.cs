@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using CommandLine;
 using HtmlAgilityPack;
@@ -31,51 +32,84 @@ namespace wgetxpath
             args = new[] {@"https://test.com", @"//table//tr//td[position()= 1 or position() = 2]", "-d"};
             #endif
 
-            Options options = null;
-            Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
-            { 
-                options = o;
-            });
-
-            if (options == null)
+            // Command line
+            Options currentOptions = ParseCommandLineArgs(args);
+            if (currentOptions == null)
             {
-                Console.Error.WriteLine("Looks like there was an error parsing the command line arguments");
                 return 1;
             }
 
-            if (options.SslNoCheck)
+            // Get HTML
+            HtmlNodeCollection nodes = GetHtmlMatchingNodes(currentOptions.Uri, currentOptions.Xpath);
+            if (nodes == null || nodes.Count == 0)
+            {
+                return 1;
+            }
+
+            // Print
+            PrintResults(nodes);
+
+            // Done
+            return 0;
+        }
+
+        protected static Options ParseCommandLineArgs(IEnumerable<string> args)
+        {
+            Options currentOptions = null;
+            Parser.Default.ParseArguments<Options>(args).WithParsed(o => { currentOptions = o; });
+
+            if (currentOptions == null)
+            {
+                Console.Error.WriteLine("Looks like there was an error parsing the command line arguments.");
+                return null;
+            }
+
+            if (currentOptions.SslNoCheck)
             {
                 ServicePointManager.ServerCertificateValidationCallback += (o, cert, chain, errors) => true;
             }
-            
+
+            return currentOptions;
+        }
+
+        protected static HtmlNodeCollection GetHtmlMatchingNodes(string uri, string xpath)
+        {
             HtmlWeb web = new HtmlWeb();
+            
             HtmlDocument doc;
             try
             {
-                 doc = web.Load(options.Uri);
+                doc = web.Load(uri);
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine($"Looks like there was an error loading the URI:\n{ex}");
-                return 1;
+                return null;
             }
 
             HtmlNodeCollection nodes;
             try
             {
-                nodes = doc.DocumentNode.SelectNodes(options.Xpath);
+                nodes = doc.DocumentNode.SelectNodes(xpath);
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine($"Looks like there was an error with the XPath:\n{ex}");
-                return 1;
+                return null;
             }
 
-            if (nodes.Count == 0)
+            if (nodes == null || nodes.Count == 0)
             {
-                return 0;
+                Console.Error.WriteLine("Looks like the XPath did not match anything.");
+                return null;
             }
+            
+            return nodes;
+        }
 
+
+        protected static void PrintResults(HtmlNodeCollection nodes)
+        {
             HtmlNode lastParentNode = null;
             foreach (HtmlNode node in nodes)
             {
@@ -89,13 +123,12 @@ namespace wgetxpath
                 }
                 else
                 {
-                    Console.WriteLine(); 
+                    Console.WriteLine();
                     Console.Write(node.InnerText);
                 }
+
                 lastParentNode = node.ParentNode;
             }
-            
-            return 0;
         }
     }
 }
